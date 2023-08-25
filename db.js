@@ -1,4 +1,15 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+async function dbClose() {
+  await mongoose.connection.close()
+  console.log('Database disconnected')
+}
+
+await mongoose.connect(process.env.ATLAS_DB_URL)
+console.log('Database connected')
 
 // Defining the user schema
 const userSchema = new mongoose.Schema({
@@ -19,4 +30,4 @@ const UserModel = mongoose.model('User', userSchema)
 // Defining the client notes schema
 
 
-export { UserModel }
+export { UserModel, dbClose }

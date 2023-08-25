@@ -1,5 +1,5 @@
-import { UserModel } from "./models.js"
-import { dbClose } from "./db.js"
+import { UserModel, dbClose } from "./db.js"
+
 
 const fakeUsers = [
   {email: "fakeemail@example.com", password: "password", phoneNumber: "0412345678", firstName: "John", lastName: "Smith", isManager: true},

@@ -111,15 +111,20 @@ console.log('Deleted Clients')
 const clients = await ClientModel.insertMany(fakeClients)
 console.log('Inserted Clients')
 
-async function addClientsToUsers (client, user) {
-  const updatedEntry = {}
-  updatedEntry.clients = client
+async function addClientsToUsers (test, user) {
+  const updatedEntry = {clients: []}
+  updatedEntry.clients.concat(test._id)
+  console.log(test._id)
   await UserModel.findByIdAndUpdate(user, updatedEntry)
-  return console.log("added clients to users")
 }
 
-addClientsToUsers(clients[0], users[0])
+const twoClients = [clients[0]._id, clients[1]._id]
+
+// console.log(twoClients)
+
+// addClientsToUsers(twoClients, users[0])
+// addClientsToUsers(clients[1]._id, users[1])
 
 
-console.log('Updated users with client references')
-dbClose()
+// Close the connection to the database
+setTimeout(dbClose, 3000)

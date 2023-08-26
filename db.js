@@ -33,6 +33,7 @@ const clientNotesSchema = new mongoose.Schema({
   outcome: { type: String, required: true },
   followUp: { type: Boolean, required: true },
   followUpNote: { type: String },
+  // author: {type: mongoose.ObjectId, ref: 'User'}
 })
 
 // TODO: Check if this is needed or not

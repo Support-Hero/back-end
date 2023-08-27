@@ -33,8 +33,8 @@ const clientNotesSchema = new mongoose.Schema({
   outcome: { type: String, required: true },
   followUp: { type: Boolean, required: true },
   followUpNote: { type: String },
-  author: {type: mongoose.ObjectId, ref: 'User', required: true },
   isMgrAuthorised: { type: Boolean, required: true },
+  author: {type: mongoose.ObjectId, ref: 'User', required: true },
   client: {type: mongoose.ObjectId, ref: 'Client', required: true }
 })
 

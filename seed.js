@@ -12,6 +12,7 @@ const fakeUsers = [
     firstName: 'Emma',
     lastName: 'Wilson',
     isManager: false,
+    clients: [],
   },
   {
     _id: new ObjectId(),
@@ -20,7 +21,8 @@ const fakeUsers = [
     phoneNumber: '0499876543',
     firstName: 'Alex',
     lastName: 'Brown',
-    isManager: false
+    isManager: false,
+    clients: [],
   },
   {
     _id: new ObjectId(),
@@ -29,7 +31,8 @@ const fakeUsers = [
     phoneNumber: '0421987654',
     firstName: 'Sarah',
     lastName: 'Miller',
-    isManager: true
+    isManager: true,
+    clients: [],
   },
   {
     _id: new ObjectId(),
@@ -38,7 +41,8 @@ const fakeUsers = [
     phoneNumber: '0410123456',
     firstName: 'David',
     lastName: 'Lee',
-    isManager: false
+    isManager: false,
+    clients: [],
   },
   {
     _id: new ObjectId(),
@@ -47,7 +51,8 @@ const fakeUsers = [
     phoneNumber: '0432654321',
     firstName: 'Olivia',
     lastName: 'Smith',
-    isManager: false
+    isManager: false,
+    clients: [],
   }
 ]
 // An array of fake clients
@@ -108,8 +113,8 @@ const fakeClientNotes = [
       actions: 'lorem Ipsum',
       outcome: 'lorem Ipsum',
       followUp: false,
-      author: fakeUsers[0],
       isMgrAuthorised: false,
+      author: fakeUsers[0],
       client: fakeClients[3]
     },
     {
@@ -120,14 +125,17 @@ const fakeClientNotes = [
       actions: 'lorem Ipsum',
       outcome: 'lorem Ipsum',
       followUp: false,
-      author: fakeUsers[1],
-      isMgrAuthorised: true,
-      client: fakeClients[1]
+      isMgrAuthorised: false,
+      author: fakeUsers[0],
+      client: fakeClients[3]
     },
 ]
-// add references to client notes in clients array
-fakeClients[3].clientNotes = [fakeClientNotes[0]._id]
-fakeClients[1].clientNotes = [fakeClientNotes[1]._id]
+// add references in the fake arrays
+fakeClients[0].clientNotes = [fakeClientNotes[0]]
+fakeClients[1].clientNotes = [fakeClientNotes[1]]
+fakeUsers[0].clients = [fakeClients[0], fakeClients[2]]
+fakeUsers[1].clients = [fakeClients[2], fakeClients[3]]
+fakeUsers[2].clients = [fakeClients[3], fakeClients[4]]
 
 // Insert fake users into the database
 await UserModel.deleteMany()

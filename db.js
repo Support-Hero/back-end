@@ -33,12 +33,13 @@ const clientNotesSchema = new mongoose.Schema({
   outcome: { type: String, required: true },
   followUp: { type: Boolean, required: true },
   followUpNote: { type: String },
-  // author: {type: mongoose.ObjectId, ref: 'User'}
+  author: {type: mongoose.ObjectId, ref: 'User', required: true },
+  isMgrAuthorised: { type: Boolean, required: true },
+  client: {type: mongoose.ObjectId, ref: 'Client', required: true }
 })
 
-// TODO: Check if this is needed or not
 // Defining the client notes model from the client notes schema
-// const ClientNotesModel = mongoose.model('Client Notes', clientNotesSchema)
+const ClientNotesModel = mongoose.model('ClientNotes', clientNotesSchema)
 
 // Defining the client schema
 const clientSchema = new mongoose.Schema({
@@ -46,11 +47,12 @@ const clientSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   address: { type: String, required: true},
   phoneNumber: { type: String, required: true },
-  clientNotes: [clientNotesSchema],
+  clientNotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'ClientNotes'}],
   assignedWorkers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 })
 
+// Defining the client model from the client schema
 const ClientModel = mongoose.model('Client', clientSchema)
 
 
-export { UserModel, ClientModel, dbClose }
+export { UserModel, ClientModel, ClientNotesModel, dbClose }

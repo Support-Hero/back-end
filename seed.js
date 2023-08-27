@@ -1,8 +1,11 @@
-import { UserModel, ClientModel, dbClose } from "./db.js"
+import { ObjectId } from "mongodb"
+import { UserModel, ClientModel, ClientNotesModel, dbClose } from "./db.js"
+
 
 // An array of fake users
 const fakeUsers = [
   {
+    _id: new ObjectId(),
     email: 'emma@example.com',
     password: 'emma1234',
     phoneNumber: '0412345678',
@@ -11,6 +14,7 @@ const fakeUsers = [
     isManager: false,
   },
   {
+    _id: new ObjectId(),
     email: 'alex@example.com',
     password: 'pass123',
     phoneNumber: '0499876543',
@@ -19,6 +23,7 @@ const fakeUsers = [
     isManager: false
   },
   {
+    _id: new ObjectId(),
     email: 'sarah@example.com',
     password: 'sarahpass',
     phoneNumber: '0421987654',
@@ -27,6 +32,7 @@ const fakeUsers = [
     isManager: true
   },
   {
+    _id: new ObjectId(),
     email: 'david@example.com',
     password: 'david987',
     phoneNumber: '0410123456',
@@ -35,6 +41,7 @@ const fakeUsers = [
     isManager: false
   },
   {
+    _id: new ObjectId(),
     email: 'olivia@example.com',
     password: 'olivia555',
     phoneNumber: '0432654321',
@@ -43,170 +50,101 @@ const fakeUsers = [
     isManager: false
   }
 ]
-
-// Insert fake users into the database
-await UserModel.deleteMany()
-console.log('Deleted Users')
-const users = await UserModel.insertMany(fakeUsers)
-console.log('Inserted users')
-
-// Extracting multiple user object ids for referencing in clients collection
-const twoUsers = [users[0], users[1]]
-const threeUsers = [users[1], users[2], users[3]]
-
-// An array of fake Clients
+// An array of fake clients
 const fakeClients = [
   {
+    _id: new ObjectId(),
     firstName: 'John',
     lastName: 'Doe',
     address: '123 Main St',
     phoneNumber: '0488888888',
-    clientNotes: [
-      {
-        date: Date(),
-        goals: 'lorem Ipsum',
-        presentation: 'lorem Ipsum',
-        actions: 'lorem Ipsum',
-        outcome: 'lorem Ipsum',
-        followUp: false
-      },
-      {
-        date: Date(),
-        goals: 'lorem Ipsum',
-        presentation: 'lorem Ipsum',
-        actions: 'lorem Ipsum',
-        outcome: 'lorem Ipsum',
-        followUp: false
-      }],
-      assignedWorkers: twoUsers
+    clientNotes: [],
+    assignedWorkers: [fakeUsers[0], fakeUsers[1]]
   },
   {
+    _id: new ObjectId(),
     firstName: 'Paul',
     lastName: 'Smith',
     address: '123 Fake Ave',
     phoneNumber: '0455555555',
-    clientNotes: [
-      {
-        date: Date(),
-        goals: 'lorem Ipsum dolor sit',
-        presentation: 'lorem Ipsum dolor sit',
-        actions: 'lorem Ipsum dolor sit',
-        outcome: 'lorem Ipsum dolor sit et',
-        followUp: true,
-        followUpNote: 'lorem Ipsum Lore'
-      },
-      {
-        date: Date(),
-        goals: 'lorem Ipsum',
-        presentation: 'lorem Ipsum',
-        actions: 'lorem Ipsum',
-        outcome: 'lorem Ipsum',
-        followUp: false,
-      }],
-      assignedWorkers: threeUsers
+    clientNotes: [],
+    assignedWorkers: [fakeUsers[0]]
   },
   {
+    _id: new ObjectId(),
     firstName: 'Paul',
     lastName: 'Smith',
     address: '123 Fake Ave',
     phoneNumber: '0455555555',
-    clientNotes: [
-      {
-        date: Date(),
-        goals: 'lorem Ipsum dolor sit',
-        presentation: 'lorem Ipsum dolor sit',
-        actions: 'lorem Ipsum dolor sit',
-        outcome: 'lorem Ipsum dolor sit et',
-        followUp: true,
-        followUpNote: 'lorem Ipsum Lore'
-      },
-      {
-        date: Date(),
-        goals: 'lorem Ipsum',
-        presentation: 'lorem Ipsum',
-        actions: 'lorem Ipsum',
-        outcome: 'lorem Ipsum',
-        followUp: false,
-      }],
-      assignedWorkers: threeUsers
+    clientNotes: [],
+    assignedWorkers: [fakeUsers[3], fakeUsers[4]]
   },
   {
+    _id: new ObjectId(),
     firstName: 'Paul',
     lastName: 'Smith',
     address: '123 Fake Ave',
     phoneNumber: '0455555555',
-    clientNotes: [
-      {
-        date: Date(),
-        goals: 'lorem Ipsum dolor sit',
-        presentation: 'lorem Ipsum dolor sit',
-        actions: 'lorem Ipsum dolor sit',
-        outcome: 'lorem Ipsum dolor sit et',
-        followUp: true,
-        followUpNote: 'lorem Ipsum Lore'
-      },
-      {
-        date: Date(),
-        goals: 'lorem Ipsum',
-        presentation: 'lorem Ipsum',
-        actions: 'lorem Ipsum',
-        outcome: 'lorem Ipsum',
-        followUp: false,
-      }],
-      assignedWorkers: users[2]
-  },{
+    clientNotes: [],
+    assignedWorkers: [fakeUsers[3], fakeUsers[1], fakeUsers[2]]
+  },
+  {
+    _id: new ObjectId(),
     firstName: 'Paul',
     lastName: 'Smith',
     address: '123 Fake Ave',
     phoneNumber: '0455555555',
-    clientNotes: [
-      {
-        date: Date(),
-        goals: 'lorem Ipsum dolor sit',
-        presentation: 'lorem Ipsum dolor sit',
-        actions: 'lorem Ipsum dolor sit',
-        outcome: 'lorem Ipsum dolor sit et',
-        followUp: true,
-        followUpNote: 'lorem Ipsum Lore'
-      },
-      {
-        date: Date(),
-        goals: 'lorem Ipsum',
-        presentation: 'lorem Ipsum',
-        actions: 'lorem Ipsum',
-        outcome: 'lorem Ipsum',
-        followUp: false,
-      }],
-      assignedWorkers: users[4]
+    clientNotes: [],
+    assignedWorkers: [fakeUsers[2]]
   }
 ]
+// An array of fake client notes
+const fakeClientNotes = [
+    {
+      _id: new ObjectId(),
+      date: Date(),
+      goals: 'lorem Ipsum',
+      presentation: 'lorem Ipsum',
+      actions: 'lorem Ipsum',
+      outcome: 'lorem Ipsum',
+      followUp: false,
+      author: fakeUsers[0],
+      isMgrAuthorised: false,
+      client: fakeClients[3]
+    },
+    {
+      _id: new ObjectId(),
+      date: Date(),
+      goals: 'lorem Ipsum',
+      presentation: 'lorem Ipsum',
+      actions: 'lorem Ipsum',
+      outcome: 'lorem Ipsum',
+      followUp: false,
+      author: fakeUsers[1],
+      isMgrAuthorised: true,
+      client: fakeClients[1]
+    },
+]
+// add references to client notes in clients array
+fakeClients[3].clientNotes = [fakeClientNotes[0]._id]
+fakeClients[1].clientNotes = [fakeClientNotes[1]._id]
+
+// Insert fake users into the database
+await UserModel.deleteMany()
+console.log('Deleted Users')
+await UserModel.insertMany(fakeUsers)
+console.log('Inserted users')
 
 // Insert fake clients into the database
 await ClientModel.deleteMany()
 console.log('Deleted Clients')
-const clients = await ClientModel.insertMany(fakeClients)
+await ClientModel.insertMany(fakeClients)
 console.log('Inserted Clients')
 
-// function to update clients list of users
-async function addClientsToUsers (test, user) {
-  const updatedEntry = {clients: []}
-  updatedEntry.clients = test
-  await UserModel.findByIdAndUpdate(user, updatedEntry)
-}
+// Insert fake client notes into the database
+await ClientNotesModel.deleteMany()
+console.log('Deleted Clients Notes')
+await ClientNotesModel.insertMany(fakeClientNotes)
+console.log('Inserted Clients Notes')
 
-// Create bogus arrays for above function
-const twoClients = [clients[0], clients[1]]
-const threeClients = [clients[2], clients[4], clients[0]]
-const twodifferentClients = [clients[4], clients[3]]
-
-// Call function on each user to update them with random clients
-addClientsToUsers(twoClients, users[0])
-addClientsToUsers(twodifferentClients, users[1])
-addClientsToUsers(threeClients, users[2])
-addClientsToUsers(clients[3], users[3])
-addClientsToUsers(clients[4], users[4])
-
-console.log('Adding refences on users collection -> clients collection')
-
-// Close the connection to the database
-setTimeout(dbClose, 3000)
+dbClose()

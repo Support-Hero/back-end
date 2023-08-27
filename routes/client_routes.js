@@ -9,6 +9,7 @@ router.get('/', async (req, res) => res.send(await ClientModel.find().populate({
 // GET singular client
 router.get('/:id', async (req, res) => {
   try {
+    console.log(req.body)
     const client = await ClientModel.findById(req.params.id).populate({ path: 'assignedWorkers'})
     
     if (client) {
@@ -23,7 +24,18 @@ router.get('/:id', async (req, res) => {
 })
 
 // POST a new client
-
+router.post('/', async (req, res) => {
+  try {
+    const newClient = await ClientModel.create(req.body)
+    res.status(201).send(newClient)
+  }
+  catch (err) {
+    if (err.name == 'ValidationError') {
+    res.status(400).send({ error: err.message })
+  } else {
+    res.status(500).send({ error: err.message })
+  }}
+})
 // PUT update a client
 
 // Delete a client

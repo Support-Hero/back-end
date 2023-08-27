@@ -1,5 +1,6 @@
 import app from './app.js'
+import dotenv from 'dotenv'
 
-const port = 5081
+dotenv.config()
 
-app.listen(port)
+app.listen(process.env.PORT)

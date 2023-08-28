@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
 })
 
 // PUT update a client
-router.put('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const updatedClient = {}
     if (req.body.firstName) {
@@ -73,9 +73,9 @@ router.put('/', async (req, res) => {
         res.status(400).send({ error: 'Workers not found' })
       }
     }
-    const user = await ClientModel.findByIdAndUpdate(req.params.id, updatedClient, { new: true })
-    if (entry) {
-      res.send(entry)
+    const client = await ClientModel.findByIdAndUpdate(req.params.id, updatedClient, { new: true })
+    if (client) {
+      res.send(client)
     } else {
       res.status(404).send({ error: 'Client not found' })
     }

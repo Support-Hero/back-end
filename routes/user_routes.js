@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
 
 // Maybe a better solution than chaining if statements ?
 // PUT update a user
-router.put('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const updatedUser = {}
     if (req.body.email) {
@@ -68,8 +68,8 @@ router.put('/', async (req, res) => {
       }
     }
     const user = await UserModel.findByIdAndUpdate(req.params.id, updatedUser, { new: true })
-    if (entry) {
-      res.send(entry)
+    if (user) {
+      res.send(user)
     } else {
       res.status(404).send({ error: 'User not found' })
     }

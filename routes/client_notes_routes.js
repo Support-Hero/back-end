@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
 })
 
 // PUT update a note
-router.put('/', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const updatedClientNote = {}
     if (req.body.date) {
@@ -84,9 +84,9 @@ router.put('/', async (req, res) => {
         res.status(400).send({ error: 'Client not found' })
       }
     }
-    const user = await ClientNotesModel.findByIdAndUpdate(req.params.id, updatedClientNote, { new: true })
-    if (entry) {
-      res.send(entry)
+    const clientNotes = await ClientNotesModel.findByIdAndUpdate(req.params.id, updatedClientNote, { new: true })
+    if (clientNotes) {
+      res.send(clientNotes)
     } else {
       res.status(404).send({ error: 'Client notes not found' })
     }

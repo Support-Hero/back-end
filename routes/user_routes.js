@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { UserModel } from "../db.js"
+import { UserModel, ClientModel } from "../db.js"
 
 const router = Router()
 
@@ -60,7 +60,7 @@ router.put('/', async (req, res) => {
       updatedUser.isManager = req.body.isManager
     }
     if (req.body.clients) {
-      const clients = await ClientModel.find({ name: req.body.category })
+      const clients = await ClientModel.find({ name: req.body.clients })
       if (clients) {
         updatedUser.clients = clients
       } else {

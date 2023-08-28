@@ -41,7 +41,60 @@ router.post('/', async (req, res) => {
 })
 
 // PUT update a note
-// TODO
+router.put('/', async (req, res) => {
+  try {
+    const updatedClientNote = {}
+    if (req.body.date) {
+      updatedClientNote.date = req.body.date
+    }
+    if (req.body.goals) {
+      updatedClientNote.goals = req.body.goals
+    }
+    if (req.body.presentation) {
+      updatedClientNote.presentation = req.body.presentation
+    }
+    if (req.body.actions) {
+      updatedClientNote.actions = req.body.actions
+    }
+    if (req.body.outcome) {
+      updatedClientNote.outcome = req.body.outcome
+    }
+    if (req.body.followUp) {
+      updatedClientNote.followUp = req.body.followUp
+    }
+    if (req.body.followUpNote) {
+      updatedClientNote.followUpNote = req.body.followUpNote
+    }
+    if (req.body.isMgrAuthorised) {
+      updatedClientNote.isMgrAuthorised = req.body.isMgrAuthorised
+    }
+    if (req.body.author) {
+      const updateAuthor = await UserModel.find({ name: req.body.author })
+      if (notes) {
+        updatedClientNote.author = updateAuthor
+      } else {
+        res.status(400).send({ error: 'User not found' })
+      }
+    }
+    if (req.body.client) {
+      const updateclient = await UserModel.find({ name: req.body.client })
+      if (updateclient) {
+        updatedClientNote.client = updateclient
+      } else {
+        res.status(400).send({ error: 'Client not found' })
+      }
+    }
+    const user = await ClientNotesModel.findByIdAndUpdate(req.params.id, updatedClientNote, { new: true })
+    if (entry) {
+      res.send(entry)
+    } else {
+      res.status(404).send({ error: 'Client notes not found' })
+    }
+  }
+  catch (err) {
+      res.status(500).send({ error: err.message })
+    }
+})
 
 // Delete a note
 router.delete('/:id', async (req, res) => {

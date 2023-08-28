@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { ClientModel, UserModel } from "../db.js"
+import { ClientModel, UserModel, ClientNotesModel } from "../db.js"
 
 const router = Router()
 
@@ -42,33 +42,48 @@ router.post('/', async (req, res) => {
 })
 
 // PUT update a client
-// Not working yet
-
-// router.put('/:id', async (req, res) => {
-//   try {
-//     let updatedClient = {}
-//     updatedClient = req.body
-//     if (updatedClient.assignedWorkers) {
-      
-//       const checkIfUserExists = await UserModel.find({ '_id': { $in: updatedClient.assignedWorkers}})
-//       console.log('test')
-//       for (let i in checkIfUserExists) {
-//         console.log(i)
-//         if (checkIfUserExists[i]._id == updatedClient.assignedWorkers) {
-//           console.log('worked')
-//         } else {
-//           console.log('didnt work')
-//         }
-//       }
-//     }
-//     res.sendStatus(200)
-//   }
-//   catch (err) {
-//     if (err.name == 'ValidationError' || 'CastError') {
-//       res.status(400).send({ error: err.message })
-//   } else {
-//     res.status(500).send({ error: err.message })
-// }}})
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedClient = {}
+    if (req.body.firstName) {
+      updatedClient.firstName = req.body.firstName
+    }
+    if (req.body.lastName) {
+      updatedClient.lastName = req.body.lastName
+    }
+    if (req.body.address) {
+      updatedClient.address = req.body.address
+    }
+    if (req.body.phoneNumber) {
+      updatedClient.phoneNumber = req.body.phoneNumber
+    }
+    if (req.body.clientnotes) {
+      const notes = await ClientNotesModel.find({ name: req.body.clientnotes })
+      if (notes) {
+        updatedClient.clientnotes = notes
+      } else {
+        res.status(400).send({ error: 'Client notes not found' })
+      }
+    }
+    if (req.body.assignedWorkers) {
+      const assginedworker = await UserModel.find({ name: req.body.assignedWorkers })
+      if (assginedworker) {
+        updatedClient.assignedWorkers = assginedworker
+      } else {
+        res.status(400).send({ error: 'Workers not found' })
+      }
+    }
+    const client = await ClientModel.findByIdAndUpdate(req.params.id, updatedClient, { new: true })
+    if (client) {
+      res.send(client)
+    } else {
+      res.status(404).send({ error: 'Client not found' })
+    }
+  }
+  catch (err) {
+      res.status(500).send({ error: err.message })
+    }
+})
 
 
 // Delete a client

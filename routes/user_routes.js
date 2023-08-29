@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { UserModel, ClientModel } from "../db.js"
+import { hash } from "bcrypt"
 
 const router = Router()
 

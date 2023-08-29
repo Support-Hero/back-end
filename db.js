@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-
+import { hashSync, compare } from 'bcrypt'
 dotenv.config()
 
 async function dbClose() {
@@ -21,6 +21,22 @@ const userSchema = new mongoose.Schema({
   isManager: { type: Boolean, required: true },
   clients: [{type: mongoose.Schema.Types.ObjectId, ref: 'Client'}]
 })
+
+// Compare password
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await compare(enteredPassword, this.password)
+}
+
+// Encrypt password
+userSchema.pre('save', async function (next) {
+  if (!this.isModified) {
+    next()
+  }
+
+  const hashedPassword = hashSync(this.password, 10)
+  this.password = hashedPassword
+})
+
 // Defining the user model from the user schema
 const UserModel = mongoose.model('User', userSchema)
 

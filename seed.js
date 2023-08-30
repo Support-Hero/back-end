@@ -1,13 +1,13 @@
 import { ObjectId } from "mongodb"
 import { UserModel, ClientModel, ClientNotesModel, dbClose } from "./db.js"
-
+import { hashSync } from 'bcrypt'
 
 // An array of fake users
 const fakeUsers = [
   {
     _id: new ObjectId(),
     email: 'emma@example.com',
-    password: 'emma1234',
+    password: hashSync('password', 10),
     phoneNumber: '0412345678',
     firstName: 'Emma',
     lastName: 'Wilson',
@@ -17,7 +17,7 @@ const fakeUsers = [
   {
     _id: new ObjectId(),
     email: 'alex@example.com',
-    password: 'pass123',
+    password: hashSync('pass123', 10),
     phoneNumber: '0499876543',
     firstName: 'Alex',
     lastName: 'Brown',
@@ -27,7 +27,7 @@ const fakeUsers = [
   {
     _id: new ObjectId(),
     email: 'sarah@example.com',
-    password: 'sarahpass',
+    password: hashSync('sarahpass', 10),
     phoneNumber: '0421987654',
     firstName: 'Sarah',
     lastName: 'Miller',
@@ -37,7 +37,7 @@ const fakeUsers = [
   {
     _id: new ObjectId(),
     email: 'david@example.com',
-    password: 'david987',
+    password: hashSync('david987', 10),
     phoneNumber: '0410123456',
     firstName: 'David',
     lastName: 'Lee',
@@ -47,7 +47,7 @@ const fakeUsers = [
   {
     _id: new ObjectId(),
     email: 'olivia@example.com',
-    password: 'olivia555',
+    password: hashSync('olivia555', 10),
     phoneNumber: '0432654321',
     firstName: 'Olivia',
     lastName: 'Smith',

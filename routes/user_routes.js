@@ -1,7 +1,5 @@
 import { Router } from "express"
 import { UserModel, ClientModel } from "../db.js"
-import { hash } from "bcrypt"
-
 const router = Router()
 
 // GET all users
@@ -11,7 +9,6 @@ router.get('/', async (req, res) => res.send(await UserModel.find().populate({ p
 router.get('/:id', async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.id).populate({ path: 'clients'})
-    
     if (user) {
       res.send(user)
     } else {

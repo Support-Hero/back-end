@@ -1,5 +1,5 @@
-import { Router } from "express"
-import { ClientNotesModel, UserModel, ClientModel } from "../db.js"
+import { Router } from 'express'
+import { ClientNotesModel, UserModel, ClientModel } from '../db.js'
 
 const router = Router()
 

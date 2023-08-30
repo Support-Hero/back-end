@@ -11,6 +11,8 @@ const authUser = async (req, res) => {
       _id: user._id,
       email: user.email,
       isManager: user.isManager,
+      firstName: user.firstName,
+      lastName: user.lastName,
       token: generateToken(user._id, user.isManager)
     })
   } else {

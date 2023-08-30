@@ -3,6 +3,7 @@ import cors from 'cors'
 import userRoutes from './routes/user_routes.js'
 import clientRoutes from './routes/client_routes.js'
 import noteRoutes from './routes/client_notes_routes.js'
+import loginRoutes from './routes/login_routes.js'
 
 const app = express()
 
@@ -17,5 +18,7 @@ app.use('/users', userRoutes)
 app.use('/clients', clientRoutes)
 
 app.use('/notes', noteRoutes)
+
+app.use('/login', loginRoutes)
 
 export default app

@@ -1,17 +1,15 @@
 import { Router } from "express"
 import { UserModel, ClientModel } from "../db.js"
-import { hash } from "bcrypt"
-
+import { protect } from "../middleware/authMiddleware.js"
 const router = Router()
 
 // GET all users
 router.get('/', async (req, res) => res.send(await UserModel.find().populate({ path: 'clients'})))
 
 // Get singular users
-router.get('/:id', async (req, res) => {
+router.get('/:id', protect, async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.id).populate({ path: 'clients'})
-    
     if (user) {
       res.send(user)
     } else {

@@ -12,3 +12,7 @@ npm i
 npm run seed
 npm run start
 ```
+
+Currently deployed:
+
+https://back-end-6pxz.onrender.com

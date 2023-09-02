@@ -3,13 +3,13 @@ import request from 'supertest'
 import { ObjectId } from "mongodb"
 
 const user = {
-  "email": "test",
-  "password": "test",
-  "phoneNumber": "test",
-  "firstName": "test",
-  "lastName": "test",
-  "isManager": false,
-  "clients": [
+  email: "test",
+  password: "test",
+  phoneNumber: "test",
+  firstName: "test",
+  lastName: "test",
+  isManager: false,
+  clients: [
       "64ead5e2c3e94c340b8d51ec"
   ]
 }
@@ -96,6 +96,11 @@ describe("User route tests", () => {
   test('DELETE /:id error handling 500', async () => {
     res = await request(app).delete(`/users/test`).set('Authorization', 'Bearer ' + token)
     expect(res.status).toBe(500)
+    expect(res.body.error).toBeDefined()
+  })
+  test('auth middleware', async () => {
+    res = await request(app).get('/users')
+    expect(res.status).toBe(401)
     expect(res.body.error).toBeDefined()
   })
   })

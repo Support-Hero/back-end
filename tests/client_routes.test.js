@@ -3,10 +3,11 @@ import request from 'supertest'
 import { ObjectId } from "mongodb"
 
 const client = {
-  "address": "test",
-  "phoneNumber": "0455555578",
-  "firstName": "test",
-  "lastName": "test",
+  
+  address: "test",
+  phoneNumber: "0455555578",
+  firstName: "test",
+  lastName: "test",
 }
 
 
@@ -22,6 +23,10 @@ describe("Client route tests", () => {
 
     token = res.body.token
     res = await request(app).get('/clients').set('Authorization', 'Bearer ' + token)
+    let noteReq = await request(app).get('/notes').set('Authorization', 'Bearer ' + token)
+    let userReq = await request(app).get('/users').set('Authorization', 'Bearer ' + token)
+    client.clientNotes = [noteReq.body[0]._id]
+    client.assignedWorkers = [userReq.body[0]._id]
     postDeleteRes = await request(app).post('/clients').send(client).set('Authorization', 'Bearer ' + token)
   })
   test('Get /', async () => {

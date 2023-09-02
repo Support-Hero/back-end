@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb"
-import { UserModel, ClientModel, ClientNotesModel, dbClose } from "./db.js"
+import { UserModel, ClientModel, ClientNotesModel, dbClose, RostersModel } from "./db.js"
 import { hashSync } from 'bcrypt'
 
 // An array of fake users
@@ -130,6 +130,68 @@ const fakeClientNotes = [
       client: fakeClients[3]
     },
 ]
+const fakeRosters = [
+  {
+    _id: new ObjectId(),
+   worker: fakeUsers[0],
+   date:   "2023-09-01",
+   shiftStart: "09:00",
+   shiftEnd: "17:00",
+   break: true,
+   breakStart: "12:00",
+   breakEnd: "12:30"
+  },
+  {
+    _id: new ObjectId(),
+   worker: fakeUsers[0],
+   date:   "2023-09-02",
+   shiftStart: "20:30",
+   shiftEnd: "04:30",
+   break: true,
+   breakStart: "22:30",
+   breakEnd: "01:00"
+  },
+  {
+    _id: new ObjectId(),
+   worker: fakeUsers[1],
+   date: "2023-09-03",
+   shiftStart: "10:00",
+   shiftEnd: "16:00",
+   break: false,
+   breakStart: null,
+   breakEnd: null
+  },
+  {
+    _id: new ObjectId(),
+   worker:fakeUsers[3],
+   date: "2023-09-01",
+   shiftStart: "12:00",
+   shiftEnd: "16:00",
+   break: true,
+   breakStart: "13:00",
+   breakEnd: "13:30"
+  },
+  {
+    _id: new ObjectId(),
+   worker: fakeUsers[3],
+   date: "2023-09-02",
+   shiftStart: "07:30",
+   shiftEnd: "15:30",
+   break: true,
+   breakStart: "11:30",
+   breakEnd: "12:00"
+  },
+  {
+    _id: new ObjectId(),
+    worker: fakeUsers[4],
+   date: "2023-09-03",
+   shiftStart: "02:00",
+   shiftEnd: "10:00",
+   break: true,
+   breakStart: "05:00",
+   breakEnd: "05:30"
+  },
+]
 // add references in the fake arrays
 fakeClients[0].clientNotes = [fakeClientNotes[0]]
 fakeClients[1].clientNotes = [fakeClientNotes[1]]
@@ -155,4 +217,9 @@ console.log('Deleted Clients Notes')
 await ClientNotesModel.insertMany(fakeClientNotes)
 console.log('Inserted Clients Notes')
 
+// Insert fake client notes into the database
+await RostersModel.deleteMany()
+console.log('Deleted rosters')
+await RostersModel.insertMany(fakeRosters)
+console.log('Inserted rosters')
 dbClose()

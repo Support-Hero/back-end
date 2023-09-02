@@ -58,7 +58,7 @@ router.put('/:id', async (req, res) => {
       updatedClient.phoneNumber = req.body.phoneNumber
     }
     if (req.body.clientNotes) {
-      const notes = await ClientNotesModel.findById(req.body.clientNotes)
+      const notes = await ClientNotesModel.find({ name: req.body.clientNotes })
       if (notes) {
         updatedClient.clientNotes = notes
       } else {
@@ -66,7 +66,7 @@ router.put('/:id', async (req, res) => {
       }
     }
     if (req.body.assignedWorkers) {
-      const assginedWorker = await UserModel.findById(req.body.assignedWorkers)
+      const assginedWorker = await UserModel.find({ name: req.body.assignedWorkers })
       if (assginedWorker) {
         updatedClient.assignedWorkers = assginedWorker
       } else {

@@ -5,7 +5,7 @@ dotenv.config()
 
 const generateToken = (id, isManager) => {
   return jwt.sign({ id, isManager }, process.env.JWT_SECRET_KEY,{
-    expiresIn: '30d',
+    expiresIn: '1d',
   })
 }
 

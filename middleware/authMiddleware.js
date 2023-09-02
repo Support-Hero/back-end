@@ -20,7 +20,7 @@ const isLoggedIn = async (req, res, next) => {
     } catch (err) {
         res.status(401).send({ error: 'Not authorised' })}
       }
-  if (!token) {
+  else {
     res.status(401).send({ error: 'Not authorized, no token' })
   }
 }

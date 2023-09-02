@@ -6,7 +6,7 @@ const user = {
   "email": "test",
   "password": "test",
   "phoneNumber": "test",
-  "firstName": "temnmnhgnmbnhst",
+  "firstName": "test",
   "lastName": "test",
   "isManager": false,
   "clients": [
@@ -43,12 +43,12 @@ describe("User route tests", () => {
     expect(res2.header['content-type']).toMatch('json')
     expect(res2.body._id).toBeDefined()
   })
-  test('test /:id error handling: incorrect user', async () => {
+  test('/:id error handling: incorrect user', async () => {
     let res2 = await request(app).get(`/users/${new ObjectId()}`).set('Authorization', 'Bearer ' + token)
     expect(res2.status).toBe(404)
     expect(res2.body.error).toBeDefined()
   })
-  test('test /:id error handling: type error', async () => {
+  test('/:id error handling: type error', async () => {
     let res2 = await request(app).get('/users/test').set('Authorization', 'Bearer ' + token)
     expect(res2.status).toBe(500)
     expect(res2.body.error).toBeDefined()

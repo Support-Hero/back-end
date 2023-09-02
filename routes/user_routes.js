@@ -1,5 +1,7 @@
 import { Router } from "express"
 import { UserModel, ClientModel } from "../db.js"
+import { hashSync } from 'bcrypt'
+
 const router = Router()
 
 // GET all users
@@ -43,7 +45,7 @@ router.put('/:id', async (req, res) => {
       updatedUser.email = req.body.email
     }
     if (req.body.password) {
-      updatedUser.password = req.body.password
+      updatedUser.password = hashSync(req.body.password, 10)
     }
     if (req.body.phoneNumber) {
       updatedUser.phoneNumber = req.body.phoneNumber

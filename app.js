@@ -5,6 +5,7 @@ import clientRoutes from './routes/client_routes.js'
 import noteRoutes from './routes/client_notes_routes.js'
 import loginRoutes from './routes/login_routes.js'
 import { isLoggedIn } from './middleware/authMiddleware.js'
+import rosterRoutes from './routes/roster_routes.js'
 
 const app = express()
 
@@ -19,6 +20,8 @@ app.use('/users', isLoggedIn, userRoutes)
 app.use('/clients', isLoggedIn, clientRoutes)
 
 app.use('/notes', isLoggedIn, noteRoutes)
+
+app.use('/rosters',isLoggedIn, rosterRoutes )
 
 app.use('/login', loginRoutes)
 

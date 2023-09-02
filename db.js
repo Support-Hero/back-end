@@ -52,6 +52,8 @@ const clientNotesSchema = new mongoose.Schema({
 // Defining the client notes model from the client notes schema
 const ClientNotesModel = mongoose.model('ClientNotes', clientNotesSchema)
 
+// Defining the client notes schema
+
 // Defining the client schema
 const clientSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
@@ -61,9 +63,21 @@ const clientSchema = new mongoose.Schema({
   clientNotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'ClientNotes'}],
   assignedWorkers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 })
-
 // Defining the client model from the client schema
 const ClientModel = mongoose.model('Client', clientSchema)
 
 
-export { UserModel, ClientModel, ClientNotesModel, dbClose }
+const rosterSchema = new mongoose.Schema({
+  date: { type: Date, required: true },
+  shiftStart: { type: String, required: true },
+  shiftEnd: { type: String, required: true },
+  break: { type: Boolean, required: true },
+  breakStart: { type: String, required: false },
+  breakEnd: { type: String, required: false },
+  worker: {type: mongoose.ObjectId, ref: 'User', required: true },
+})
+
+// Defining the client notes model from the client notes schema
+const RostersModel = mongoose.model('Roster', rosterSchema)
+
+export { UserModel, ClientModel, ClientNotesModel,RostersModel, dbClose }

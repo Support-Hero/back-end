@@ -3,13 +3,13 @@ import dotenv from 'dotenv'
 import { hashSync } from 'bcrypt'
 dotenv.config()
 
+// Function to close connection to the database
 async function dbClose() {
   await mongoose.connection.close()
-  console.log('Database disconnected')
 }
 
+// Open a connection to the database
 await mongoose.connect(process.env.ATLAS_DB_URL)
-console.log('Database connected')
 
 // Defining the user schema
 const userSchema = new mongoose.Schema({

@@ -15,14 +15,12 @@ const isLoggedIn = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
       req.user = await UserModel.findById(decoded.id).select('-password')
 
+
       next()
     }
     catch (err) {
       res.status(402).send({ error: 'Not authorised' })
     }
-  }
-  else {
-    res.status(401).send({ error: 'Not authorized, no token' })
   }
 }
 

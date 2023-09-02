@@ -69,17 +69,17 @@ router.put('/:id', async (req, res) => {
       updatedClientNote.isMgrAuthorised = req.body.isMgrAuthorised
     }
     if (req.body.author) {
-      const updateAuthor = await UserModel.find({ name: req.body.author })
-      if (notes) {
+      const updateAuthor = await UserModel.findById(req.body.author)
+      if (updateAuthor) {
         updatedClientNote.author = updateAuthor
       } else {
         res.status(400).send({ error: 'User not found' })
       }
     }
     if (req.body.client) {
-      const updateclient = await ClientModel.find({ name: req.body.client })
-      if (updateclient) {
-        updatedClientNote.client = updateclient
+      const updateClient = await ClientModel.findById(req.body.client)
+      if (updateClient) {
+        updatedClientNote.client = updateClient
       } else {
         res.status(400).send({ error: 'Client not found' })
       }

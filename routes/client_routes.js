@@ -57,18 +57,18 @@ router.put('/:id', async (req, res) => {
     if (req.body.phoneNumber) {
       updatedClient.phoneNumber = req.body.phoneNumber
     }
-    if (req.body.clientnotes) {
-      const notes = await ClientNotesModel.find({ name: req.body.clientnotes })
+    if (req.body.clientNotes) {
+      const notes = await ClientNotesModel.find({ name: req.body.clientNotes })
       if (notes) {
-        updatedClient.clientnotes = notes
+        updatedClient.clientNotes = notes
       } else {
         res.status(400).send({ error: 'Client notes not found' })
       }
     }
     if (req.body.assignedWorkers) {
-      const assginedworker = await UserModel.find({ name: req.body.assignedWorkers })
-      if (assginedworker) {
-        updatedClient.assignedWorkers = assginedworker
+      const assginedWorker = await UserModel.find({ name: req.body.assignedWorkers })
+      if (assginedWorker) {
+        updatedClient.assignedWorkers = assginedWorker
       } else {
         res.status(400).send({ error: 'Workers not found' })
       }

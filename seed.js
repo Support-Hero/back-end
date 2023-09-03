@@ -129,6 +129,42 @@ const fakeClientNotes = [
       author: fakeUsers[0],
       client: fakeClients[3]
     },
+    {
+      _id: new ObjectId(),
+      date: Date(),
+      goals: 'lorem Ipsum',
+      presentation: 'lorem Ipsum',
+      actions: 'lorem Ipsum',
+      outcome: 'lorem Ipsum',
+      followUp: false,
+      isMgrAuthorised: false,
+      author: fakeUsers[0],
+      client: fakeClients[3]
+    },
+    {
+      _id: new ObjectId(),
+      date: Date(),
+      goals: 'lorem Ipsum',
+      presentation: 'lorem Ipsum',
+      actions: 'lorem Ipsum',
+      outcome: 'lorem Ipsum',
+      followUp: false,
+      isMgrAuthorised: false,
+      author: fakeUsers[0],
+      client: fakeClients[3]
+    },
+    {
+      _id: new ObjectId(),
+      date: Date(),
+      goals: 'lorem Ipsum',
+      presentation: 'lorem Ipsum',
+      actions: 'lorem Ipsum',
+      outcome: 'lorem Ipsum',
+      followUp: false,
+      isMgrAuthorised: false,
+      author: fakeUsers[0],
+      client: fakeClients[3]
+    },
 ]
 const fakeRosters = [
   {
